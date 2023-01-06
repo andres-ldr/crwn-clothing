@@ -22,13 +22,6 @@
     flex-direction: column;
     overflow-y: scroll;
   }
-  .cart-items::-webkit-scrollbar {
-    display: none;
-  }
-  .cart-items {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
 
   button {
     margin-top: auto;
