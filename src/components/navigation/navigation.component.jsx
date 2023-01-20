@@ -1,35 +1,38 @@
-import { Fragment, useContext } from "react";
-import { Outlet } from "react-router";
-import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
-import CartIcon from "../cart-icon/cart-icon.component";
-import { selectCurrentUser } from "../store/user/user.selector";
-import { CartContext } from "../../context/cart.context";
-import { signOutUser } from "../../utils/firebase.utils";
+import { Fragment } from 'react';
+import { Outlet } from 'react-router';
+import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
+import CartIcon from '../cart-icon/cart-icon.component';
+import { selectCurrentUser } from '../store/user/user.selector';
+
+import { signOutUser } from '../../utils/firebase.utils';
 import {
   NavigationContainer,
   LogoContainer,
   NavLinksContainer,
   NavLink,
-} from "./navigation.styles.jsx";
-import CartDropdown from "../cart-dropdown/cart-dropdown.component";
-import { useSelector } from "react-redux";
+} from './navigation.styles.jsx';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
+import { useSelector } from 'react-redux';
+import { selectIsCartOpen } from '../store/cart/cart.selector';
 
 const Navigation = () => {
-  const currentUser  = useSelector(selectCurrentUser);
-  const { isCartOpen } = useContext(CartContext);
+  const currentUser = useSelector(selectCurrentUser);
+  const isCartOpen = useSelector(selectIsCartOpen);
 
   return (
     <Fragment>
       <NavigationContainer>
-        <LogoContainer to="/">
+        <LogoContainer to='/'>
           <CrwnLogo />
         </LogoContainer>
         <NavLinksContainer>
-          <NavLink to="/shop">SHOP</NavLink>
+          <NavLink to='/shop'>SHOP</NavLink>
           {currentUser ? (
-            <NavLink as='span' onClick={signOutUser}>SIGN OUT</NavLink>
+            <NavLink as='span' onClick={signOutUser}>
+              SIGN OUT
+            </NavLink>
           ) : (
-            <NavLink to="/auth">Sign In</NavLink>
+            <NavLink to='/auth'>Sign In</NavLink>
           )}
           <CartIcon />
         </NavLinksContainer>
