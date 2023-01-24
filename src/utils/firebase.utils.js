@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   signInWithRedirect,
@@ -8,7 +8,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-} from "firebase/auth";
+} from 'firebase/auth';
 
 import {
   getFirestore,
@@ -19,15 +19,15 @@ import {
   writeBatch,
   query,
   getDocs,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDM9RSEiZgUMk5h0H83gFJp_Lrrvq9gpJ8",
-  authDomain: "crwn-app-db-b2f4d.firebaseapp.com",
-  projectId: "crwn-app-db-b2f4d",
-  storageBucket: "crwn-app-db-b2f4d.appspot.com",
-  messagingSenderId: "260003464316",
-  appId: "1:260003464316:web:c91025dd32b6b1ab4eb5f9",
+  apiKey: 'AIzaSyDM9RSEiZgUMk5h0H83gFJp_Lrrvq9gpJ8',
+  authDomain: 'crwn-app-db-b2f4d.firebaseapp.com',
+  projectId: 'crwn-app-db-b2f4d',
+  storageBucket: 'crwn-app-db-b2f4d.appspot.com',
+  messagingSenderId: '260003464316',
+  appId: '1:260003464316:web:c91025dd32b6b1ab4eb5f9',
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -44,11 +44,11 @@ export const addCollectionAndDocuments = async (
     batch.set(docRef, object);
   });
   await batch.commit();
-  console.log("done");
+  console.log('done');
 };
 
 export const getCategoriesAndDocuments = async () => {
-  const collectionRef = collection(db, "categories");
+  const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
@@ -57,7 +57,7 @@ export const getCategoriesAndDocuments = async () => {
 const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
-  prompt: "select_account",
+  prompt: 'select_account',
 });
 
 export const auth = getAuth();
@@ -73,7 +73,7 @@ export const createUserDocumentFromAuth = async (
 ) => {
   if (!userAuth) return;
 
-  const userDocRef = doc(db, "users", userAuth.uid);
+  const userDocRef = doc(db, 'users', userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
 
   if (!userSnapshot.exists()) {
@@ -87,7 +87,7 @@ export const createUserDocumentFromAuth = async (
         ...additionalInfo,
       });
     } catch (err) {
-      console.log("error creating the user", err.message);
+      console.log('error creating the user', err.message);
     }
   }
   return userDocRef;
@@ -109,3 +109,16 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback) =>
   onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};
