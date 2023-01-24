@@ -12,13 +12,15 @@ import Navigation from './components/navigation/navigation.component';
 import Authentication from './components/routes/authentication/Authentication.component';
 import Shop from './components/routes/shop/shop.component';
 import CheckOut from './components/routes/checkout/checkout.component';
-import setCurrentUser from './components/store/user/user.action';
+import setCurrentUser, {
+  checkUserSession,
+} from './components/store/user/user.action';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getCurrentUser().then((user) => console.log(user));
+    dispatch(checkUserSession());
   }, [dispatch]);
 
   return (
