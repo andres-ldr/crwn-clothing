@@ -12,12 +12,16 @@ import {
   NavLink,
 } from './navigation.styles.jsx';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectIsCartOpen } from '../store/cart/cart.selector';
+import { signOutStart } from '../store/user/user.action';
 
 const Navigation = () => {
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen);
+  const dispatch = useDispatch();
+
+  const signOutUser = () => dispatch(signOutStart());
 
   return (
     <Fragment>
