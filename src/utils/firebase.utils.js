@@ -1,7 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import {
   getAuth,
-  signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -30,7 +29,7 @@ const firebaseConfig = {
   appId: '1:260003464316:web:c91025dd32b6b1ab4eb5f9',
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+// const firebaseApp = initializeApp(firebaseConfig);
 
 export const addCollectionAndDocuments = async (
   collectionKey,
