@@ -13,18 +13,34 @@ const PaymentForm = () => {
     if (!stripe || !elements) {
       return;
     }
+    const response = await fetch(`/.netlify/functions/create-payment-intent`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ amount: 1000 }),
+    }).then((res) => res.json());
 
-    const response = await fetch(
-      '/netlify/functions/create-payment-intent.js',
-      {
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
+    const {
+      paymentIntent: { client_secret },
+    } = response;
+
+    const paymentResult = await stripe.confirmCardPayment(client_secret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: 'Andres client',
         },
-        body: JSON.stringify({ amount: 1000 }),
+      },
+    });
+
+    if (paymentResult.error) {
+      alert(paymentResult.error);
+    } else {
+      if (paymentResult.paymentIntent.status === 'succeeded') {
+        alert('Payment Successful');
       }
-    ).then((res) => res.json());
-    console.log(response);
+    }
   };
 
   return (
