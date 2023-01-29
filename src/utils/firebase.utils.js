@@ -1,3 +1,4 @@
+import { initializeApp } from '@firebase/app';
 import {
   getAuth,
   signInWithPopup,
@@ -19,16 +20,17 @@ import {
   getDocs,
 } from 'firebase/firestore';
 
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyDM9RSEiZgUMk5h0H83gFJp_Lrrvq9gpJ8',
-//   authDomain: 'crwn-app-db-b2f4d.firebaseapp.com',
-//   projectId: 'crwn-app-db-b2f4d',
-//   storageBucket: 'crwn-app-db-b2f4d.appspot.com',
-//   messagingSenderId: '260003464316',
-//   appId: '1:260003464316:web:c91025dd32b6b1ab4eb5f9',
-// };
+const firebaseConfig = {
+  apiKey: 'AIzaSyDM9RSEiZgUMk5h0H83gFJp_Lrrvq9gpJ8',
+  authDomain: 'crwn-app-db-b2f4d.firebaseapp.com',
+  projectId: 'crwn-app-db-b2f4d',
+  storageBucket: 'crwn-app-db-b2f4d.appspot.com',
+  messagingSenderId: '260003464316',
+  appId: '1:260003464316:web:c91025dd32b6b1ab4eb5f9',
+};
 
-// const firebaseApp = initializeApp(firebaseConfig);
+// eslint-disable-next-line
+const firebaseApp = initializeApp(firebaseConfig);
 
 export const addCollectionAndDocuments = async (
   collectionKey,
